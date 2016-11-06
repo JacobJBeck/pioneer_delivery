@@ -30,7 +30,10 @@ class delivery
 delivery::delivery(ros::NodeHandle nh): totalWP(4){
   subResult = nh.subscribe("move_base/result", 10, &delivery::waypointCallback, this) ;
   pubWaypoint = nh.advertise<geometry_msgs::Twist>("cmd_map_goal", 10) ;
-  currentWP = 0 ;
+
+  //currentWP = 0;
+  ros::param::get("start", currentWP);
+
   char buffer[50] ;
   for (int i = 0; i < totalWP; i++){
     vector<double> tempWP ;
