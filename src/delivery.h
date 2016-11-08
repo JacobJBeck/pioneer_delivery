@@ -31,8 +31,8 @@ delivery::delivery(ros::NodeHandle nh): totalWP(4){
   subResult = nh.subscribe("move_base/result", 10, &delivery::waypointCallback, this) ;
   pubWaypoint = nh.advertise<geometry_msgs::Twist>("cmd_map_goal", 10) ;
 
-  //currentWP = 0;
-  ros::param::get("start", currentWP);
+  // Get starting position
+  nh.getParam("start", currentWP);
 
   char buffer[50] ;
   for (int i = 0; i < totalWP; i++){
@@ -58,7 +58,7 @@ void delivery::waypointCallback(const move_base_msgs::MoveBaseActionResult& msg)
 
   while (newWP == currentWP)
     newWP = rand() % totalWP ;
-
+  ROS_INFO_STREAM("Old WP: " << currentWP << " new WP: " << newWP);
   currentWP = newWP ;
   
   waypoint.linear.x = allWaypoints[currentWP][0] ;

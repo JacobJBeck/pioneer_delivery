@@ -1,5 +1,9 @@
 <launch>
+  <arg name="start"/>
+
   <rosparam file="$(find pioneer_delivery)/waypoints_demo.yaml" command="load" />
+  <param name="start" value="$(arg start)"/>
+  
   <node pkg="pioneer_delivery" type="delivery_waypoint" respawn="false" name="delivery_waypoint" output="screen">
   </node>
 </launch>
